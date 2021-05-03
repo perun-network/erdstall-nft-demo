@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.Main {
+  width: 100%;
+}
+
+.Navigation {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.Mint {
+  padding-top: 60px;
+  height: 100%;
+  width: 100%;
+}
+
+.Onboarding {
+  background-image: url(images/erdstallbackground.png);
+  background-size: cover;
+  background-position: bottom;
+  z-index: -111111;
+  height: 100vh;
+  position: fixed;
+}
+
+@media only screen and (max-width: 1444px) {
+  .Onboarding {
+    background-position: right;
+  }
+}
+
+.TripleTiles {
+  height: 100%;
+  background-color: #880000;
+}
+
+.DoubleTiles {
+  height: 100%;
+  overflow: hide;
+  background-color: #006600;
+}
+
+.DebugContainer {
+  background-color: #000055;
+  height: 200px;
+}
