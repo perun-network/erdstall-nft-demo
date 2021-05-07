@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { NavLink } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import NavBar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
@@ -10,35 +10,53 @@ interface props {
 
 function Navigation(props: props) {
   return (
-    <NavBar className="Navigation" bg="dark" variant="dark">
-      <NavBar.Brand>cNFTs</NavBar.Brand>
-      <Nav className="mr-auto">
-        <Nav.Link disabled={!props.onboarded}>
-          <NavLink activeClassName="navbar-current" to="/me/home">
-            Home
-          </NavLink>
-        </Nav.Link>
-        <Nav.Link disabled={!props.onboarded}>
-          <NavLink activeClassName="navbar-current" to="/me/nfts">
-            MyNFTs
-          </NavLink>
-        </Nav.Link>
-        <Nav.Link disabled={!props.onboarded}>
-          <NavLink activeClassName="navbar-current" to="/me/mint">
-            Mint
-          </NavLink>
-        </Nav.Link>
-        <Nav.Link disabled={!props.onboarded}>
-          <NavLink activeClassName="navbar-current" to="/about">
-            About
-          </NavLink>
-        </Nav.Link>
-        <Nav.Link disabled={!props.onboarded}>
-          <NavLink activeClassName="navbar-current" to="/contact">
+    <NavBar
+      className="Navigation"
+      bg="dark"
+      variant="dark"
+      expand="lg"
+      collapseOnSelect
+    >
+      <NavBar.Brand>
+        <div className="NERDLogo" />
+      </NavBar.Brand>
+      <NavBar.Toggle aria-controls="responsive-navbar-nav" />
+      <NavBar.Collapse
+        className="justify-content-end"
+        id="responsive-navbar-nav"
+      >
+        <Nav>
+          <LinkContainer
+            className="navbar-item"
+            activeClassName="navbar-current"
+            to="/me/home"
+          >
+            <Nav.Link disabled={!props.onboarded}>Home</Nav.Link>
+          </LinkContainer>
+          <LinkContainer
+            className="navbar-item"
+            activeClassName="navbar-current"
+            to="/me/nfts"
+          >
+            <Nav.Link disabled={!props.onboarded}>MyNFTs</Nav.Link>
+          </LinkContainer>
+          <LinkContainer
+            className="navbar-item"
+            activeClassName="navbar-current"
+            to="/me/mint"
+          >
+            <Nav.Link disabled={!props.onboarded}>Mint</Nav.Link>
+          </LinkContainer>
+          <Nav.Link
+            target="_blank"
+            href="https://polycry.pt"
+            rel="noreferrer"
+            disabled={!props.onboarded}
+          >
             Contact
-          </NavLink>
-        </Nav.Link>
-      </Nav>
+          </Nav.Link>
+        </Nav>
+      </NavBar.Collapse>
     </NavBar>
   );
 }

@@ -1,27 +1,61 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import TripleTiles from "../layouts/TripleTiles";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
-function Box() {
-  return <Container className="DebugContainer">DebugContainer</Container>;
+import TripleTiles from "../layouts/TripleTiles";
+import MintSettings from "./MintSettings";
+import NFTPreview from "./NFTPreview";
+import MintingSummary from "./MintingSummary";
+
+export interface nftState {
+  confidential: boolean;
+  title: string;
+  image: string;
+  description: string;
 }
 
-function Buttons() {
-  return (
-    <Container>
-      <Button>Button_01</Button>
-      <Button>Button_02</Button>
-      <Button>Button_03</Button>
-    </Container>
-  );
+interface props {
+  onMint: (s: nftState) => void;
 }
 
-function Mint() {
+function Mint(props: props) {
+  const [confidential, setConfidential] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("/defaultnft.png");
+
   return (
     <Container className="Mint">
-      <TripleTiles lt={Box} lb={Box} rs={Box} buttons={Buttons} />
+      <TripleTiles
+        lt={
+          <NFTPreview
+            setImage={setImage}
+            setTitle={setTitle}
+            setDescription={setDescription}
+          />
+        }
+        lb={<MintSettings onConfidential={setConfidential} />}
+        rs={<MintingSummary />}
+        buttons={
+          <Button
+            className="MintButton"
+            size="lg"
+            variant="light"
+            onClick={() => {
+              props.onMint({
+                confidential: confidential,
+                title: title,
+                description: description,
+                image: image,
+              });
+            }}
+          >
+            Mint
+          </Button>
+        }
+      />
     </Container>
   );
 }

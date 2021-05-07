@@ -1,22 +1,47 @@
 // SPDX-License-Identifier: Apache-2.0
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./Home";
 import MyNFTs from "./MyNFTs";
-import Mint from "./Mint";
-import About from "./About";
-import Contact from "./Contact";
+import Mint, { nftState } from "./Mint";
 import Onboarding from "./Onboarding";
 
-function Main() {
+interface props {
+  onboarded: boolean;
+  toggleOnboarded: () => void;
+}
+
+function Main(props: props) {
   return (
     <Switch>
-      <Route exact path="/" component={Onboarding}></Route>
-      <Route exact path="/me/home" component={Home}></Route>
-      <Route exact path="/me/nfts" component={MyNFTs}></Route>
-      <Route exact path="/me/mint" component={Mint}></Route>
-      <Route exact path="/about" component={About}></Route>
-      <Route exact path="/contact" component={Contact}></Route>
+      <Route exact path="/">
+        {props.onboarded ? (
+          <Redirect to="/me/home" />
+        ) : (
+          <Onboarding toggleOnboarded={props.toggleOnboarded} />
+        )}
+      </Route>
+      <Route exact path="/me/home">
+        {props.onboarded ? <Home /> : <Redirect to="/" />}
+      </Route>
+      <Route exact path="/me/nfts">
+        {props.onboarded ? <MyNFTs /> : <Redirect to="/" />}
+      </Route>
+      <Route exact path="/me/mint">
+        {props.onboarded ? (
+          <Mint
+            onMint={(n: nftState) => {
+              console.log("MINT REGISTERED");
+              console.log(n);
+            }}
+          />
+        ) : (
+          <Redirect to="/" />
+        )}
+      </Route>
+      <Route>
+        {props.onboarded ? <Redirect to="/me/home" /> : <Redirect to="/" />}
+      </Route>
     </Switch>
   );
 }
