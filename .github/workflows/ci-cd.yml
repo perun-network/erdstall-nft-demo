@@ -1,0 +1,99 @@
+name: CI-CD
+
+# Triggered on all pull requests and dev pushes.
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Install dependencies
+      run: yarn
+    - name: Build
+      run: yarn build
+    - name: Prepare health check
+      # Create commit hash file for healthcheck.
+      run: touch "build/${{ github.sha }}"
+    - name: Upload build result
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build/
+
+  cd_dev:
+    # Deploy to staging /dev.
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+    - name: Download build result
+      uses: actions/download-artifact@v2
+      with:
+        name: build
+        path: build/
+    - name: Deploy to staging Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.DAPP_DEPLOY_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "build/"
+          REMOTE_HOST: ${{ secrets.DAPP_DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DAPP_DEPLOY_USER }}
+          TARGET: ${{ secrets.DAPP_DEPLOY_DIR }}/dev
+
+  cd_master:
+    # Deploy to production /.
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+    - name: Download build result
+      uses: actions/download-artifact@v2
+      with:
+        name: build
+        path: build/
+    - name: Deploy to staging Server
+      uses: easingthemes/ssh-deploy@v2.1.5
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.DAPP_DEPLOY_KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "build/"
+          REMOTE_HOST: ${{ secrets.DAPP_DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DAPP_DEPLOY_USER }}
+          TARGET: ${{ secrets.DAPP_DEPLOY_DIR }}
+
+  healthcheck_dev:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
+    runs-on: ubuntu-latest
+    needs: cd_dev
+    steps:
+    - name: Check Deployment URL
+      uses: jtalk/url-health-check-action@v1.2
+      with:
+        url: "${{ secrets.DAPP_STAGING_URL }}/dev/${{ github.sha }}"
+        follow-redirect: yes
+        max-attempts: 3
+        retry-delay: 5s
+  
+  healthcheck_master:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    needs: cd_master
+    steps:
+    - name: Check Deployment URL
+      uses: jtalk/url-health-check-action@v1.2
+      with:
+        url: "${{ secrets.DAPP_STAGING_URL }}/${{ github.sha }}"
+        follow-redirect: yes
+        max-attempts: 3
+        retry-delay: 5s
