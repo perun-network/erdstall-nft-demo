@@ -9,7 +9,7 @@ export default class Call {
   @jsonMember data?: ERDSTALLOBJECT;
   @jsonMember error?: string;
 
-  constructor(id: string, data: ERDSTALLOBJECT, error: string) {
+  constructor(id: string, data: ERDSTALLOBJECT, error?: string) {
     this.id = id;
     this.data = data;
     this.error = error;

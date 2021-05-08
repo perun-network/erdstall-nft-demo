@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test-b": "env TS_NODE_PROJECT=\"tsconfig.spec.json\" mocha -r ts-node/register src/**/*.spec.ts",
-    "chain": "./integrationtest.sh deps/nerd-op"
+    "integration": "./integrationtest.sh deps/nerd-op"
   },
   "eslintConfig": {
     "extends": [
