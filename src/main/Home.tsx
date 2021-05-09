@@ -36,7 +36,13 @@ function Home() {
 
     getNFTs().then((v) => {
       console.log("GETTING NFTS");
-      setNFTs(mapNFTDataToImages(v, history, ctx.account!.toString()));
+      setNFTs(
+        mapNFTDataToImages(
+          v,
+          history,
+          ctx.account ? ctx.account!.toString() : ""
+        )
+      );
       setReady(true);
     });
   };

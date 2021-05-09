@@ -29,7 +29,7 @@ function Navigation(props: props) {
           <LinkContainer
             className="navbar-item"
             activeClassName="navbar-current"
-            to="/me/home"
+            to="/home"
           >
             <Nav.Link disabled={!props.onboarded}>Home</Nav.Link>
           </LinkContainer>

@@ -27,7 +27,7 @@ checkInstalled go ganache-cli
 # start ganache in background.
 ganache-cli \
   -e 1000000 \
-  -b 20 \
+  -b 1 \
   -m "pistol kiwi shrug future ozone ostrich match remove crucial oblige cream critic" \
   -i 1337 \
   -l 10721975 \

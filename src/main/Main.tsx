@@ -17,13 +17,13 @@ function Main(props: props) {
     <Switch>
       <Route exact path="/">
         {props.onboarded ? (
-          <Redirect to="/me/home" />
+          <Redirect to="/home" />
         ) : (
           <Onboarding toggleOnboarded={props.toggleOnboarded} />
         )}
       </Route>
-      <Route exact path="/me/home">
-        {props.onboarded ? <Home /> : <Redirect to="/" />}
+      <Route exact path="/home">
+        <Home />
       </Route>
       <Route exact path="/me/nfts">
         {props.onboarded ? <MyNFTs /> : <Redirect to="/" />}
@@ -44,7 +44,7 @@ function Main(props: props) {
         <NFTTrade />
       </Route>
       <Route>
-        {props.onboarded ? <Redirect to="/me/home" /> : <Redirect to="/" />}
+        {props.onboarded ? <Redirect to="/home" /> : <Redirect to="/" />}
       </Route>
     </Switch>
   );
