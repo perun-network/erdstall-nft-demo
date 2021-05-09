@@ -37,10 +37,7 @@ GANACHE_PID=$! # save ganache PID for later kill.
 echo $GANACHE_PID
 cd $1
 
-if ! test -f "nerd-op"; then
-  go build
-fi
-
+go build
 ./nerd-op -log-level "trace" -config demo/config.json -server demo/server.json &
 
 OPERATOR_PID=$!
