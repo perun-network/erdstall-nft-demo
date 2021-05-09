@@ -52,6 +52,20 @@ export default function NFTInformation(props: props) {
             />
           </Col>
         </Form.Group>
+
+        <Form.Group as={Row} controlId="formNFTInfoID">
+          <Form.Label column sm="3">
+            <b>Encrypted:</b>
+          </Form.Label>
+          <Col className="mt-2" sm="9">
+            <Form.Check
+              name="formNFTInfoConfidential"
+              id="formNFTInfoConfidential"
+              defaultChecked={props.nftmetadata.secret}
+              disabled
+            />
+          </Col>
+        </Form.Group>
       </Form>
     </Container>
   );

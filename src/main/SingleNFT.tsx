@@ -7,13 +7,16 @@ import TripleTiles from "../layouts/TripleTiles";
 import NFT from "./NFT";
 import NFTMetaData from "../api/nftmetadata";
 import NFTInformation from "./NFTInformation";
+import AppContext from "../AppContext";
 
 export default function SingleNFT() {
   const [ready, setReady] = React.useState(false);
+  const [secret, setSecret] = React.useState(false);
   const [err, setErr] = React.useState(false);
   const { token, id } = useParams<{ token: string; id: string }>();
   const [img, setImage] = React.useState("");
   const [nftState, setNFTState] = React.useState({} as NFTMetaData);
+  const ctx = React.useContext(AppContext);
 
   React.useEffect(() => {
     const getNFTData = async () => {
@@ -36,7 +39,11 @@ export default function SingleNFT() {
 
     getNFTData().then(
       (res: NFTMetaData) => {
-        setImage(`/assets/${res.assetId}.png`);
+        const s =
+          (!ctx.account && res.secret) ||
+          (res.secret && res.owner !== ctx.account!.toString());
+        setImage(s ? "/noise.gif" : `/assets/${res.assetId}.png`);
+        setSecret(s);
         setNFTState(res);
         setReady(true);
       },
@@ -60,7 +67,7 @@ export default function SingleNFT() {
                   ? "There is no NFT with this ID."
                   : "This is NOT a random NFT"
               }
-              invalid={err}
+              invalid={err || secret}
             />
           }
           lb={<></>}

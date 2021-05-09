@@ -106,10 +106,14 @@
   width: 100%;
 }
 
-.NFTImage {
+.NFTImage, .InvalidNFTImage  {
   background: #333333;
   object-fit: contain;
   max-height: 400px;
+}
+
+.InvalidNFTImage {
+  object-fit: cover;
 }
 
 .NFTTextContainer {

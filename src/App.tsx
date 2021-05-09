@@ -8,17 +8,10 @@ import InfoModal from "./main/InfoModal";
 
 import ERDSTALLOBJECT from "./api/object";
 import ClientConfig from "./api/clientconfig";
-import * as errors from "./main/Error";
 import AppContext from "./AppContext";
 import "./App.css";
 
 function App() {
-  const leaveHint = [
-    "Leaving/Reloading for this Demo is not supported.",
-    "You will need to reconnect your account if you decide to do so.",
-    "All your minted NFTs are still available but temporary data would be lost.",
-  ].join(" ");
-
   const [onboarded, setOnboarded] = React.useState(false);
   const [hasInfo, setShowInfo] = React.useState(false);
 
@@ -37,22 +30,11 @@ function App() {
   ctx.conn.on("proof", console.log);
   ctx.conn.on("error", console.log);
 
-  const handleRefresh = (e: Event) => {
-    if (onboarded) {
-      e.preventDefault();
-      e.returnValue = true;
-
-      errors.Erdstall(<p>{leaveHint}</p>);
-    }
-  };
-
   React.useEffect(() => {
-    window.addEventListener("beforeunload", handleRefresh);
     document.addEventListener("ErdstallError", handleError);
     ctx.conn.connect();
     return () => {
       document.removeEventListener("ErdstallError", handleError);
-      window.removeEventListener("beforeunload", handleRefresh);
     };
   });
 

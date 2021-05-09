@@ -9,12 +9,20 @@ interface props {
   description: string;
   buttons?: JSX.Element;
   invalid?: boolean;
+  onClick?: () => void;
 }
 
 export default function NFT(props: props) {
   return (
-    <Card className={props.invalid ? "InvalidNFT" : "NFT"}>
-      <Card.Img className="NFTImage" variant="top" src={props.img} />
+    <Card
+      className={props.invalid ? "InvalidNFT" : "NFT"}
+      onClick={props.onClick}
+    >
+      <Card.Img
+        className={props.invalid ? "InvalidNFTImage" : "NFTImage"}
+        variant="top"
+        src={props.img}
+      />
       <Container className="NFTTextContainer">
         <Container className="NFTText">{props.description}</Container>
       </Container>
