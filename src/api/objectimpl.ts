@@ -25,6 +25,9 @@ ERDSTALLOBJECT.fromJSON = (js: any): ERDSTALLOBJECT => {
       return TypedJSON.parse(data, GetAccount)!;
     case "AccountResponse":
       return TypedJSON.parse(data, AccountResponse)!;
+    case "BalanceProof":
+      console.info("Received BalanceProof");
+      return undefined as any;
     default:
       throw new Error(`unknown type "${js.type}"`);
   }

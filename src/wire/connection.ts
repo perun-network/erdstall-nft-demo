@@ -75,23 +75,35 @@ export default class Connection {
   }
 
   private onMessage(ev: MessageEvent) {
-    const om = TypedJSON.parse(ev.data, Call);
-    if (!om) {
+    let om: Call | undefined;
+    try {
+      om = TypedJSON.parse(ev.data, Call);
+    } catch {
+      console.info("Received unsupported message");
+    }
+
+    const msg = om;
+    if (!msg) {
       return this.handleUnknownMessage(ev.data);
     }
 
-    if (om.id) {
-      const [resolve, reject] = this.calls.get(om.id)!;
-      this.calls.delete(om.id);
-      if (om.error) {
-        reject(om.error);
-        return this.callEvent("error", om.error);
+    if (msg.id) {
+      const [resolve, reject] = this.calls.get(msg.id)!;
+      this.calls.delete(msg.id);
+      if (msg.error) {
+        reject(msg.error);
+        return this.callEvent("error", msg.error);
       } else {
-        return resolve(om.data);
+        return resolve(msg.data);
       }
     }
 
-    const obj = om.data!;
+    const obj = msg.data!;
+    if (obj === undefined) {
+      console.info("Received unsupported message from Operator");
+      return;
+    }
+
     switch (obj.objectTypeName()) {
       case "ClientConfig":
         return this.callEvent("config", obj);
