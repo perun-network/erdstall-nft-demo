@@ -62,7 +62,7 @@ function mapNFTDataToImages(
   account: string
 ): JSX.Element[] {
   if (!nfts) {
-    return [<></>];
+    return [];
   }
   return nfts.map((data, i) => {
     const img =

@@ -34,16 +34,12 @@ function MyNFTs() {
       return response.json();
     };
 
-    getNFTs().then((v) => {
-      console.log("GETTING NFTS");
-      setNFTs(
-        mapNFTDataToImages(v, history, (data: NFTMetaData): boolean => {
-          console.log("COMPARING");
-          console.log("data.owner: ", data.owner);
-          console.log("ctx.account: ", ctx.account!.toString());
-          return data.owner === ctx.account!.toString();
-        })
-      );
+    const pred = (data: NFTMetaData): boolean => {
+      return data.owner === ctx.account!.toString();
+    };
+
+    getNFTs().then((v: NFTMetaData[]) => {
+      setNFTs(mapNFTDataToImages((v || []).filter(pred), history));
       setReady(true);
     });
   };
@@ -56,19 +52,11 @@ function MyNFTs() {
   );
 }
 
-function mapNFTDataToImages(
-  nfts: NFTMetaData[],
-  history: any,
-  pred: (data: NFTMetaData) => boolean
-): JSX.Element[] {
+function mapNFTDataToImages(nfts: NFTMetaData[], history: any): JSX.Element[] {
   if (!nfts) {
-    return [<></>];
+    return [];
   }
   return nfts.map((data, i) => {
-    if (!pred(data)) {
-      return <></>;
-    }
-
     const img = `/assets/${data.assetId}.png`;
     console.log(img);
     return (

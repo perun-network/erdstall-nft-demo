@@ -10,7 +10,15 @@ interface props {
 function AdaptiveTileList(props: props) {
   return (
     <Container className="AdaptiveTileList" fluid>
-      <Row className="AdaptiveTileListRow">{props.nfts}</Row>
+      <Row className="AdaptiveTileListRow">
+        {props.nfts.length === 0 ? (
+          <Container className="EmptyNFTList">
+            <h1>No NFTs exist yet.</h1>
+          </Container>
+        ) : (
+          props.nfts
+        )}
+      </Row>
     </Container>
   );
 }
