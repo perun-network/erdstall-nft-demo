@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
+import "reflect-metadata";
+import "./api/init";
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";

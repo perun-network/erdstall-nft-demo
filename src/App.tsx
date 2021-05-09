@@ -3,14 +3,62 @@
 import React from "react";
 import Navigation from "./navigation/Navigation";
 import Main from "./main/Main";
+
+import InfoModal from "./main/InfoModal";
+
+import ERDSTALLOBJECT from "./api/object";
+import ClientConfig from "./api/clientconfig";
+import AppContext from "./AppContext";
 import "./App.css";
 
 function App() {
+  const [onboarded, setOnboarded] = React.useState(false);
+  const [hasInfo, setShowInfo] = React.useState(false);
+
+  const [content, setInfoContent] = React.useState(<></>);
+  const handleError = (ev: CustomEventInit) => {
+    setInfoContent(ev.detail);
+    setShowInfo(true);
+  };
+
+  const ctx = React.useContext(AppContext);
+  ctx.conn.on("config", (obj: ERDSTALLOBJECT) => {
+    const config = obj as ClientConfig;
+    ctx.contract = config.contract;
+  });
+  ctx.conn.on("receipt", console.log);
+  ctx.conn.on("proof", console.log);
+  ctx.conn.on("error", console.log);
+
+  React.useEffect(() => {
+    document.addEventListener("ErdstallError", handleError);
+    ctx.conn.connect();
+    return () => {
+      document.removeEventListener("ErdstallError", handleError);
+    };
+  });
+
   return (
-    <div className="App">
-      <Navigation onboarded={true} />
-      <Main />
-    </div>
+    <>
+      <Navigation onboarded={onboarded} />
+      <div className="App">
+        <AppContext.Provider value={ctx}>
+          <Main
+            onboarded={onboarded}
+            toggleOnboarded={() => {
+              setOnboarded(!onboarded);
+            }}
+          />
+        </AppContext.Provider>
+      </div>
+      <InfoModal
+        content={content}
+        show={hasInfo}
+        toggleShow={() => {
+          setShowInfo(false);
+        }}
+      />
+    </>
   );
 }
 

@@ -5,11 +5,11 @@ import { jsonObject, jsonMember } from "typedjson";
 
 @jsonObject
 export default class Call {
-  @jsonMember id?: string;
-  @jsonMember data?: ERDSTALLOBJECT;
-  @jsonMember error?: string;
+  @jsonMember(String) id?: string;
+  @jsonMember(ERDSTALLOBJECT) data?: ERDSTALLOBJECT;
+  @jsonMember(String) error?: string;
 
-  constructor(id: string, data: ERDSTALLOBJECT, error: string) {
+  constructor(id: string, data: ERDSTALLOBJECT, error?: string) {
     this.id = id;
     this.data = data;
     this.error = error;

@@ -18,6 +18,10 @@ export default class Address {
   static toJSON(me: Address) {
     return utils.hexlify(me.value);
   }
+
+  toString(): string {
+    return utils.hexlify(this.value);
+  }
 }
 
 CustomJSON(Address);

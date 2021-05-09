@@ -2,21 +2,22 @@
 
 import ERDSTALLOBJECT from "./object";
 import { jsonObject, jsonMember } from "typedjson";
+import Address from "./address";
 
 @jsonObject
-export default class Subscribe extends ERDSTALLOBJECT {
-  @jsonMember(String) who: string;
+export default class GetAccount extends ERDSTALLOBJECT {
+  @jsonMember(Address) who: Address;
 
-  constructor(who: string) {
+  constructor(who: Address) {
     super();
     this.who = who;
   }
 
   objectType(): any {
-    return Subscribe;
+    return GetAccount;
   }
 
   objectTypeName(): string {
-    return "Subscribe";
+    return "GetAccount";
   }
 }

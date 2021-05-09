@@ -27,7 +27,7 @@ checkInstalled go ganache-cli
 # start ganache in background.
 ganache-cli \
   -e 1000000 \
-  -b 20 \
+  -b 1 \
   -m "pistol kiwi shrug future ozone ostrich match remove crucial oblige cream critic" \
   -i 1337 \
   -l 10721975 \
@@ -37,11 +37,8 @@ GANACHE_PID=$! # save ganache PID for later kill.
 echo $GANACHE_PID
 cd $1
 
-if ! test -f "nerd-op"; then
-  go build
-fi
-
-./nerd-op -log-level "debug" -config demo/config.json -server demo/server.json &
+go build
+./nerd-op -log-level "trace" -config demo/config.json -server demo/server.json &
 
 OPERATOR_PID=$!
 echo $OPERATOR_PID

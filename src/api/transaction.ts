@@ -6,22 +6,22 @@ import Address from "./address";
 import Signature from "./signature";
 import CustomJSON from "./customjson";
 import BigInteger from "./bigint";
+import { utils, Signer } from "ethers";
 
 @jsonObject
 export default abstract class Transaction extends ERDSTALLOBJECT {
-  @jsonMember sender: Address;
-  @jsonMember nonce: BigInteger;
-  @jsonMember epoch: BigInteger;
-  @jsonMember sig: Signature;
+  @jsonMember(Address) sender: Address;
+  @jsonMember(BigInteger) nonce: BigInteger;
+  @jsonMember(BigInteger) epoch: BigInteger;
+  @jsonMember(Signature) sig?: Signature;
 
   static fromJSON: (js: any) => Transaction;
 
-  constructor(sender: Address, nonce: bigint, epoch: bigint, sig: Signature) {
+  constructor(sender: Address, nonce: bigint, epoch: bigint) {
     super();
     this.sender = sender;
     this.nonce = new BigInteger(nonce);
     this.epoch = new BigInteger(epoch);
-    this.sig = sig;
   }
 
   static toJSON(me: Transaction) {
@@ -41,6 +41,14 @@ export default abstract class Transaction extends ERDSTALLOBJECT {
 
   abstract type(): any;
   abstract typeName(): string;
+  protected abstract toABI(contract: string): any;
+
+  async sign(contract: string, signer: Signer) {
+    const msg = this.toABI(contract);
+    const data = utils.keccak256(msg);
+    const sig = await signer.signMessage(utils.arrayify(data));
+    this.sig = new Signature(utils.arrayify(sig));
+  }
 }
 
 CustomJSON(Transaction);

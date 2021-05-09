@@ -1,32 +1,37 @@
 .App {
-  text-align: center;
-  height: 100%;
   width: 100%;
-}
-
-.Main {
-  width: 100%;
+  position: absolute;
+  padding-top: 15px;
+  top: 50px;
+  bottom: 0px;
+  overflow-y: auto;
 }
 
 .Navigation {
   width: 100%;
   position: fixed;
+  z-index: 1111111;
   top: 0;
   left: 0;
 }
 
-.Mint {
-  padding-top: 60px;
-  height: 100%;
-  width: 100%;
+.navbar-item {
+  color: #ffffff;
+}
+.navbar-item:hover {
+  color: #ffdf00;
+  text-decoration: underline;
+}
+.navbar-current {
+  color: #ffdf00;
 }
 
 .Onboarding {
   background-image: url(images/erdstallbackground.png);
   background-size: cover;
   background-position: bottom;
-  z-index: -111111;
-  height: 100vh;
+  top: 0px;
+  height: 100%;
   position: fixed;
 }
 
@@ -36,9 +41,51 @@
   }
 }
 
+.Main, .Home, .MyNFTs, .Mint, .About, .Contact, .EmptyNFTList {
+  width: 100%;
+}
+
+.Home {
+  height: auto;
+}
+
+.MyNFTs {
+  height: auto;
+}
+
+.Mint, .EmptyNFTList {
+  border: solid 1px;
+  border-color: #333333;
+  border-radius: 4px;
+  background: #343a40;
+  margin-bottom: 20px;
+  height: auto;
+  width: 100%;
+}
+
+.EmptyNFTList {
+  text-align: center;
+  padding-top: 10em;
+  padding-bottom: 10em;
+}
+
+.About {
+}
+
+.Contact {
+}
+
+.AdaptiveTileList {
+}
+
+.AdaptiveTileListRow {
+  justify-content: center;
+  align-items: center;
+}
+
 .TripleTiles {
   height: 100%;
-  background-color: #880000;
+  padding-bottom: 20px;
 }
 
 .DoubleTiles {
@@ -50,4 +97,132 @@
 .DebugContainer {
   background-color: #000055;
   height: 200px;
+}
+
+.MintSettings, .MintingSummary, .EmptyNFTList {
+  background: #ffffff;
+  border-radius: 4px;
+  border: solid 1px;
+  border-color: #aaaaaa;
+}
+
+.NFTTile {
+  text-align: center;
+  height: auto;
+  width: 100%;
+}
+
+.NFTImage, .InvalidNFTImage  {
+  background: #333333;
+  object-fit: contain;
+  max-height: 400px;
+}
+
+.InvalidNFTImage {
+  object-fit: cover;
+}
+
+.NFTTextContainer {
+  height: 100%;
+  opacity: 0%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  top: 0;
+  left: 0;
+}
+
+.NFTTextContainer:hover {
+  animation: fadeIn 0.3s linear;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
+
+.NFTInformation {
+  border: solid 1px;
+  border-color: #333333;
+  border-radius: 4px;
+  background: #ffffff;
+  padding-top: 10px;
+  height: auto;
+}
+
+.NFTText {
+  padding-top: 10px;
+  height: 100%;
+  text-align: justify;
+  overflow: auto;
+  color: #ffffff;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.NFTText::-webkit-scrollbar {
+  display: none;
+}
+
+.NFT, .NFTPreview, .MintSettings, .MintingSummary, .Mint, .MintButton, .InvalidNFT, .NFTInformation, .EmptyNFTList{
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 6px 2px #00ff80;
+}
+
+.InvalidNFT {
+  box-shadow: 0px 0px 8px 4px #f00c;
+}
+
+.InvalidNFT {
+}
+
+.NFT:hover, {
+  box-shadow: 0px 0px 6px 2px #ff7f00;
+  z-index: 12;
+
+  animation-name: hoverNFT;
+  animation-duration: 8s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+
+  backface-visibility: hidden;
+}
+
+@keyframes hoverNFT {
+  from {
+    transform: scale(1.00);
+  }
+
+  to {
+    transform: scale(1.03);
+  }
+}
+
+.NERDLogo {
+  position: absolute;
+  top: 0;
+  left: 10;
+  width: 300px;
+  height: 65px;
+  background-image: url(images/Nerd_Logo_Alpha.png);
+  background-size: 40%;
+  background-position: -20px center;
+  background-repeat: no-repeat;
+}
+
+.NERDSummary {
+  text-align: justify;
+}
+
+.Divider {
+  border-bottom: 1px solid #aaaaaa;
+  margin: auto;
+  margin: -8px auto 4px;
+  box-shadow: 0 2px 2px #888888;
 }
