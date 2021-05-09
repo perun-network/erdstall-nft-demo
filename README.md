@@ -1,6 +1,7 @@
 # Erdstall-NFT-Demo
 
 This project contains the front-end for the Erdstall minting/cNFT demo, made for the ETHGlobal Scaling Hackathon.
+For the backend see [Nerd-Op](https://github.com/perun-network/nerd-op).
 
 ## Development
 
@@ -22,3 +23,7 @@ Use this demo with the integrationtest:
 
 Use the branches to your liking for each repository and issue a `yarn integration` in the source directory of this repository.
 This builds the `nerd-op` executable in `deps/nerd-op` and spins up a `ganache-cli`, which has to be installed globally.
+
+* `yarn integration` Commands:
+  * `quit` - to stop the integration test and shutdown ganache-cli and operator.
+
