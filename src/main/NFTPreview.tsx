@@ -5,13 +5,14 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 
 interface props {
-  setImage: (image: string) => void;
+  setImage: (image: number) => void;
   setTitle: (title: string) => void;
   setDescription: (description: string) => void;
+  images: JSX.Element[];
 }
 
 export default function NFTPreview(props: props) {
-  const [image, setImage] = useState("/nerd.png");
+  const [image, setImage] = useState("/assets/0.png");
   return (
     <Card className="NFTPreview">
       <Card.Img className="NFTImage" variant="top" src={image} />
@@ -21,20 +22,18 @@ export default function NFTPreview(props: props) {
             <Form.Label>Image</Form.Label>
             <Form.Control
               as="select"
-              defaultValue="/nerd.png"
+              defaultValue="0"
               type="NFTImage"
               placeholder="Choose an image to mint..."
               onChange={(event) => {
                 if (!event.target.value) {
                   return;
                 }
-                setImage(event.target.value);
-                props.setImage(event.target.value);
+                setImage(`/assets/${event.target.value}.png`);
+                props.setImage(Number.parseInt(event.target.value));
               }}
             >
-              <option value="/bog.png">Bogdanov</option>
-              <option value="/cia.png">CIA</option>
-              <option value="/nerd.png">NERD</option>
+              {props.images}
             </Form.Control>
           </Form.Group>
           <Form.Group controlId="formNFTTitle">

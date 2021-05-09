@@ -5,6 +5,7 @@ import Home from "./Home";
 import MyNFTs from "./MyNFTs";
 import Mint, { nftState } from "./Mint";
 import Onboarding from "./Onboarding";
+import NFTTrade from "./NFTTrade";
 
 interface props {
   onboarded: boolean;
@@ -38,6 +39,9 @@ function Main(props: props) {
         ) : (
           <Redirect to="/" />
         )}
+      </Route>
+      <Route path="/nft">
+        <NFTTrade />
       </Route>
       <Route>
         {props.onboarded ? <Redirect to="/me/home" /> : <Redirect to="/" />}

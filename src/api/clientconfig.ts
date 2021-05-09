@@ -6,9 +6,9 @@ import Address from "./address";
 
 @jsonObject
 export default class ClientConfig extends ERDSTALLOBJECT {
-  @jsonMember contract: Address;
-  @jsonMember networkID: string;
-  @jsonMember powDepth: number;
+  @jsonMember(Address) contract: Address;
+  @jsonMember(String) networkID: string;
+  @jsonMember(Number) powDepth: number;
 
   constructor(contract: Address, networkID: string, powDepth: number) {
     super();

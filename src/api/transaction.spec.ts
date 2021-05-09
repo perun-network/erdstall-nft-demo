@@ -26,6 +26,15 @@ describe("wiremessages", () => {
   it("de-/encodes clientconfigs", () => {
     genericJSONTest(testClientConfig, Call);
   });
+
+  it("stringifies addresses", () => {
+    const res = TypedJSON.parse(testClientConfig, Call);
+
+    const addr = (res!.data as any).contract;
+    console.log(addr);
+    console.log(addr.toString());
+    console.log(`"contract":"0x75a96a43b52366e05c9b1d5c7ca01aa69f373553"`);
+  });
 });
 
 function genericJSONTest(data: string, type: any) {

@@ -1,0 +1,7 @@
+{
+  "ErdstallAddr": "0x079557d7549d7d44f4b00b51d2c532674129ed51",
+  "OperatorAddr": "127.0.0.1",
+  "OperatorPort": 8401,
+  "NERDAddr": "localhost",
+  "NERDPort": "8440"
+}

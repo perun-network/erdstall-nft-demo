@@ -123,7 +123,7 @@
 }
 
 .NFTTextContainer:hover {
-  animation: fadeIn 1s linear;
+  animation: fadeIn 0.3s linear;
   animation-fill-mode: both;
 }
 
@@ -135,6 +135,15 @@
   to {
     opacity: 100%;
   }
+}
+
+.NFTInformation {
+  border: solid 1px;
+  border-color: #333333;
+  border-radius: 4px;
+  background: #ffffff;
+  padding-top: 10px;
+  height: auto;
 }
 
 .NFTText {
@@ -151,12 +160,19 @@
   display: none;
 }
 
-.NFT, .NFTPreview, .MintSettings, .MintingSummary, .Mint, .MintButton {
+.NFT, .NFTPreview, .MintSettings, .MintingSummary, .Mint, .MintButton, .InvalidNFT, .NFTInformation {
   margin-bottom: 10px;
   box-shadow: 0px 0px 6px 2px #00ff80;
 }
 
-.NFT:hover {
+.InvalidNFT {
+  box-shadow: 0px 0px 8px 4px #f00c;
+}
+
+.InvalidNFT {
+}
+
+.NFT:hover, {
   box-shadow: 0px 0px 6px 2px #ff7f00;
   z-index: 12;
 

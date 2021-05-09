@@ -4,6 +4,9 @@ import Url from "./url";
 import Subscribe from "../api/subscribe";
 import ERDSTALLOBJECT from "../api/object";
 import Call from "../api/call";
+import MintTX from "../api/minttx";
+import Address from "../api/address";
+import GetAccount from "../api/getaccount";
 import { TypedJSON } from "typedjson";
 
 type ConnectionEvent = "config" | "receipt" | "proof" | "error";
@@ -26,23 +29,33 @@ export default class Connection {
 
   public connect() {
     this.ws = new WebSocket(this.url);
-    this.ws.onmessage = this.onMessage;
-    this.ws.onerror = this.onError;
+    this.ws.onmessage = (ev) => this.onMessage(ev);
+    this.ws.onerror = (ev) => this.onError(ev);
   }
 
   public async subscribe(who: string): Promise<void> {
     const sub = new Subscribe(who);
-    return this.sendCall(sub);
+    await this.sendCall(sub);
+    return;
   }
 
-  private async sendCall(data: ERDSTALLOBJECT): Promise<void> {
+  public async mint(tx: MintTX): Promise<void> {
+    await this.sendCall(tx);
+    return;
+  }
+
+  public async getAccount(acc: Address): Promise<ERDSTALLOBJECT> {
+    return this.sendCall(new GetAccount(acc)) as Promise<ERDSTALLOBJECT>;
+  }
+
+  private async sendCall(data: ERDSTALLOBJECT): Promise<ERDSTALLOBJECT> {
     if (!this.ws) {
       throw UninitialisedConn;
     }
 
     const id = this.newID().toString();
 
-    const p = new Promise<void>((resolve, reject) => {
+    const p = new Promise<ERDSTALLOBJECT>((resolve, reject) => {
       this.calls.set(id, [resolve, reject]);
     });
 
@@ -58,7 +71,7 @@ export default class Connection {
   }
 
   private newID(): number {
-    return Math.round(Math.random() * Number.MAX_VALUE);
+    return Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
   }
 
   private onMessage(ev: MessageEvent) {
@@ -74,7 +87,7 @@ export default class Connection {
         reject(om.error);
         return this.callEvent("error", om.error);
       } else {
-        resolve(om.data);
+        return resolve(om.data);
       }
     }
 

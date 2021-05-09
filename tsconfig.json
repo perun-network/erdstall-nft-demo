@@ -2,9 +2,9 @@
   "compilerOptions": {
     "target": "es2020",
     "lib": [
+      "esnext",
       "dom",
-      "dom.iterable",
-      "esnext"
+      "dom.iterable"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,9 +15,10 @@
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "experimentalDecorators": true,
     "noEmit": true,
     "jsx": "react-jsx"
   },

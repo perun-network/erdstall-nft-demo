@@ -1,26 +1,26 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import ERDSTALLOBJECT from "./object";
-import Transaction from "./transaction";
 import { jsonObject, jsonMember } from "typedjson";
 import Account from "./account";
+import BigInteger from "./bigint";
 
 @jsonObject
-export default class TxReceipt extends ERDSTALLOBJECT {
-  @jsonMember(Transaction) tx: Transaction;
+export default class AccountResponse extends ERDSTALLOBJECT {
   @jsonMember(Account) account: Account;
+  @jsonMember(BigInteger) epoch: BigInteger;
 
-  constructor(tx: Transaction, account: Account) {
+  constructor(account: Account, epoch: BigInt) {
     super();
-    this.tx = tx;
     this.account = account;
+    this.epoch = new BigInteger(epoch);
   }
 
   objectType(): any {
-    return TxReceipt;
+    return AccountResponse;
   }
 
   objectTypeName(): string {
-    return "TxReceipt";
+    return "AccountResponse";
   }
 }

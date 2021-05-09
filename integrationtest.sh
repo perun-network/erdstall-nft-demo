@@ -41,7 +41,7 @@ if ! test -f "nerd-op"; then
   go build
 fi
 
-./nerd-op -log-level "debug" -config demo/config.json -server demo/server.json &
+./nerd-op -log-level "trace" -config demo/config.json -server demo/server.json &
 
 OPERATOR_PID=$!
 echo $OPERATOR_PID

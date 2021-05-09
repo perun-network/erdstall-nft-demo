@@ -1,37 +1,62 @@
 // SPDX-License-Identifier: Apache-2.0
 
+import React from "react";
 import Container from "react-bootstrap/Container";
 import AdaptiveTileList from "../layouts/AdaptiveTileList";
 import Col from "react-bootstrap/Col";
 import NFT from "./NFT";
+import NFTMetaData from "../api/nftmetadata";
 
 function Home() {
-  const imgs = ["/bog.png", "/nerd.png", "/cia.png"];
-  const description =
-    "This exquisite piece of digital art represents the crypto space in all its glory, swing-trading and loss of funds. One might say it is created by a divine being, humble enough to bless us with a short visit dumping all them prices.";
-  const title = "Bogdanov";
-  const buildCells = () => {
-    var tiles: JSX.Element[] = new Array(64);
-    for (var i: number = 0; i < tiles.length; i++) {
-      const img = imgs[0 | (Math.random() * imgs.length)];
-      tiles[i] = (
-        <Col key={i} className="NFTTile" xs={12} sm={6} md={4} lg={3} xl={2}>
-          <NFT
-            img={img}
-            title={title.concat(`_${i}`)}
-            description={description}
-          />
-        </Col>
+  const [ready, setReady] = React.useState(false);
+  const [nfts, setNFTs] = React.useState(new Array<JSX.Element>());
+
+  const fetchNFTs = () => {
+    const getNFTs = async () => {
+      const response = await fetch(
+        `${window.location.protocol}//${window.location.hostname}:8440/nfts`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
       );
-    }
-    return tiles;
+
+      if (!response.ok) {
+        throw new Error("unknown NFT");
+      }
+
+      return response.json();
+    };
+
+    getNFTs().then((v) => {
+      console.log("GETTING NFTS");
+      setNFTs(mapNFTDataToImages(v));
+      setReady(true);
+    });
   };
+
+  React.useEffect(fetchNFTs, []);
 
   return (
     <Container className="Home" fluid>
-      <AdaptiveTileList nfts={buildCells()} />
+      {ready ? <AdaptiveTileList nfts={nfts} /> : <></>}
     </Container>
   );
+}
+
+function mapNFTDataToImages(nfts: NFTMetaData[]): JSX.Element[] {
+  const description = "No descriptions available, yet.";
+  return nfts.map((data, i) => {
+    const img = `/assets/${data.assetId}.png`;
+    console.log(img);
+    return (
+      <Col key={i} className="NFTTile" xs={12} sm={6} md={4} lg={3} xl={2}>
+        <NFT img={img} title={`${data.id}`} description={description} />
+      </Col>
+    );
+  });
 }
 
 export default Home;

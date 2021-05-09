@@ -6,6 +6,8 @@ import Main from "./main/Main";
 
 import InfoModal from "./main/InfoModal";
 
+import ERDSTALLOBJECT from "./api/object";
+import ClientConfig from "./api/clientconfig";
 import * as errors from "./main/Error";
 import AppContext from "./AppContext";
 import "./App.css";
@@ -26,6 +28,15 @@ function App() {
     setShowInfo(true);
   };
 
+  const ctx = React.useContext(AppContext);
+  ctx.conn.on("config", (obj: ERDSTALLOBJECT) => {
+    const config = obj as ClientConfig;
+    ctx.contract = config.contract;
+  });
+  ctx.conn.on("receipt", console.log);
+  ctx.conn.on("proof", console.log);
+  ctx.conn.on("error", console.log);
+
   const handleRefresh = (e: Event) => {
     if (onboarded) {
       e.preventDefault();
@@ -38,6 +49,7 @@ function App() {
   React.useEffect(() => {
     window.addEventListener("beforeunload", handleRefresh);
     document.addEventListener("ErdstallError", handleError);
+    ctx.conn.connect();
     return () => {
       document.removeEventListener("ErdstallError", handleError);
       window.removeEventListener("beforeunload", handleRefresh);
@@ -48,7 +60,7 @@ function App() {
     <>
       <Navigation onboarded={onboarded} />
       <div className="App">
-        <AppContext.Provider value={{ account: "" }}>
+        <AppContext.Provider value={ctx}>
           <Main
             onboarded={onboarded}
             toggleOnboarded={() => {

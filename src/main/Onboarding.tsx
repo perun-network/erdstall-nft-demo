@@ -4,17 +4,19 @@ import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import { ethers, utils } from "ethers";
 
 import * as errors from "./Error";
 import initWeb3 from "../logic/web3";
 import AppContext from "../AppContext";
+import Address from "../api/address";
 
 interface props {
   toggleOnboarded: () => void;
 }
 
 function Onboarding(props: props) {
-  const state = useContext(AppContext);
+  const ctx = useContext(AppContext);
   return (
     <Container className="d-flex justify-content-center Onboarding" fluid>
       <Row className="my-auto">
@@ -24,7 +26,11 @@ function Onboarding(props: props) {
             if (res instanceof Error) {
               return;
             }
-            state.account = res;
+
+            const { s, p } = res;
+            ctx.account = new Address(utils.arrayify(s));
+            ctx.provider = p;
+            ctx.conn.subscribe(ctx.account.toString());
             props.toggleOnboarded();
           }}
         >
@@ -35,7 +41,9 @@ function Onboarding(props: props) {
   );
 }
 
-async function onboard(): Promise<string | Error> {
+async function onboard(): Promise<
+  { s: string; p: ethers.providers.Web3Provider } | Error
+> {
   const web3Provider = await initWeb3();
 
   const ethereum = web3Provider.provider! as any;
@@ -70,7 +78,7 @@ async function onboard(): Promise<string | Error> {
     return new Error(err);
   }
 
-  return account;
+  return { s: account, p: web3Provider };
 }
 
 export default Onboarding;

@@ -6,6 +6,8 @@ import Subscribe from "./subscribe";
 import ClientConfig from "./clientconfig";
 import TxReceipt from "./txreceipt";
 import Transaction from "./transaction";
+import GetAccount from "./getaccount";
+import AccountResponse from "./accountresponse";
 
 ERDSTALLOBJECT.fromJSON = (js: any): ERDSTALLOBJECT => {
   let data = JSON.stringify(js.data);
@@ -19,6 +21,10 @@ ERDSTALLOBJECT.fromJSON = (js: any): ERDSTALLOBJECT => {
       return TypedJSON.parse(data, Subscribe)!;
     case "Transaction":
       return TypedJSON.parse(data, Transaction)!;
+    case "GetAccount":
+      return TypedJSON.parse(data, GetAccount)!;
+    case "AccountResponse":
+      return TypedJSON.parse(data, AccountResponse)!;
     default:
       throw new Error(`unknown type "${js.type}"`);
   }
