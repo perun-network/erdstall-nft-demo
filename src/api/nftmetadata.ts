@@ -6,4 +6,6 @@ export default interface NFTMetaData {
   owner: string;
   assetId: number;
   secret: boolean;
+  title: string;
+  desc: string;
 }

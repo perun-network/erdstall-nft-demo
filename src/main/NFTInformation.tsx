@@ -1,16 +1,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
+import { useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import NFTMetaData from "../api/nftmetadata";
 
+import AppContext from "../AppContext";
+
 interface props {
   nftmetadata: NFTMetaData;
 }
 
 export default function NFTInformation(props: props) {
+  const ctx = useContext(AppContext);
   return (
     <Container className="NFTInformation">
       <Form>
@@ -35,7 +39,7 @@ export default function NFTInformation(props: props) {
             <Form.Control
               plaintext
               readOnly
-              defaultValue={props.nftmetadata.token}
+              defaultValue={ctx.contract!.toString()}
             />
           </Col>
         </Form.Group>

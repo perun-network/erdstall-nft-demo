@@ -95,6 +95,8 @@ function Mint(props: props) {
                       owner: minttx.sender.toString(),
                       assetId: image,
                       secret: confidential,
+                      desc: description,
+                      title: title,
                     }),
                     headers: {
                       "Content-Type": "text/plain",

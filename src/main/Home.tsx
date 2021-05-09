@@ -64,7 +64,6 @@ function mapNFTDataToImages(
   if (!nfts) {
     return [<></>];
   }
-  const description = "No descriptions available, yet.";
   return nfts.map((data, i) => {
     const img =
       data.secret && data.owner !== account
@@ -75,8 +74,8 @@ function mapNFTDataToImages(
       <Col key={i} className="NFTTile" xs={12} sm={6} md={4} lg={3} xl={2}>
         <NFT
           img={img}
-          title={`${data.id}`}
-          description={description}
+          title={data.title}
+          description={data.desc}
           onClick={() => {
             history.push(`/nft/${data.token}/${data.id}`);
           }}

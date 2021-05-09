@@ -12,6 +12,8 @@ import AppContext from "../AppContext";
 export default function SingleNFT() {
   const [ready, setReady] = React.useState(false);
   const [secret, setSecret] = React.useState(false);
+  const [title, setTitle] = React.useState("");
+  const [description, setDescription] = React.useState("");
   const [err, setErr] = React.useState(false);
   const { token, id } = useParams<{ token: string; id: string }>();
   const [img, setImage] = React.useState("");
@@ -44,6 +46,8 @@ export default function SingleNFT() {
           (res.secret && res.owner !== ctx.account!.toString());
         setImage(s ? "/noise.gif" : `/assets/${res.assetId}.png`);
         setSecret(s);
+        setTitle(res.title);
+        setDescription(res.desc);
         setNFTState(res);
         setReady(true);
       },
@@ -52,7 +56,7 @@ export default function SingleNFT() {
         setErr(true);
       }
     );
-  });
+  }, []);
 
   return (
     <Container>
@@ -61,12 +65,8 @@ export default function SingleNFT() {
           lt={
             <NFT
               img={img}
-              title={err ? "Error: 404 Not Found" : "Not a random NFT"}
-              description={
-                err
-                  ? "There is no NFT with this ID."
-                  : "This is NOT a random NFT"
-              }
+              title={err ? "Error: 404 Not Found" : title}
+              description={err ? "There is no NFT with this ID." : description}
               invalid={err || secret}
             />
           }
