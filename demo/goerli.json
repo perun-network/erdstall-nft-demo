@@ -1,0 +1,9 @@
+{
+  "ErdstallAddr": "0xfE7FF256a12df528ac61EeF533441448d129B83B",
+  "OperatorAddr": "operator.goerli.erdstall.dev",
+  "OperatorPort": 8401,
+  "NERDAddr": "operator.goerli.erdstall.dev",
+  "NERDPort": 8440,
+  "Protocol": "wss"
+}
+

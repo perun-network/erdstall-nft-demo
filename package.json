@@ -26,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test-b": "env TS_NODE_PROJECT=\"tsconfig.spec.json\" mocha -r ts-node/register src/**/*.spec.ts",
-    "integration": "./integrationtest.sh deps/nerd-op"
+    "integration": "$PWD/integrationtest.sh deps/nerd-op",
+    "loadconfig": "$PWD/loadconfig.sh"
   },
   "eslintConfig": {
     "extends": [

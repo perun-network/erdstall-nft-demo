@@ -22,7 +22,9 @@ jobs:
       with:
         node-version: '12.x'
     - name: Install dependencies
-      run: yarn
+      run: |
+        yarn
+        yarn loadconfig -n goerli
     # - name: Prepare build
     #   if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' }}
     #   run: |

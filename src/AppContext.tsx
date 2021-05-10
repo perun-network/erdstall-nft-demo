@@ -20,7 +20,7 @@ export interface NiftyErdstallState {
 const operatorURL = new Url(
   config.OperatorPort,
   config.OperatorAddr,
-  "ws",
+  config.Protocol,
   "/ws"
 );
 
