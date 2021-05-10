@@ -9,7 +9,13 @@ import Address from "../api/address";
 import GetAccount from "../api/getaccount";
 import { TypedJSON } from "typedjson";
 
-type ConnectionEvent = "config" | "receipt" | "proof" | "error";
+type ConnectionEvent =
+  | "open"
+  | "close"
+  | "config"
+  | "receipt"
+  | "proof"
+  | "error";
 
 const UninitialisedConn = new Error("uninitialised connection");
 
@@ -31,6 +37,7 @@ export default class Connection {
     this.ws = new WebSocket(this.url);
     this.ws.onmessage = (ev) => this.onMessage(ev);
     this.ws.onerror = (ev) => this.onError(ev);
+    this.ws.onopen = (ev) => this.onOpen(ev);
   }
 
   public async subscribe(who: string): Promise<void> {
@@ -132,10 +139,22 @@ export default class Connection {
   private onError(ev: Event) {
     console.error("connection error: ", ev);
 
+    const cb = this.handlers.get("close");
+    if (cb) cb({} as any);
+
     if (this.ws) {
       this.ws.close();
     }
     this.ws = undefined;
-    setTimeout(this.connect, 1000);
+    setTimeout(() => {
+      try {
+        this.connect();
+      } catch {}
+    }, 1000);
+  }
+
+  private onOpen(_: Event) {
+    const cb = this.handlers.get("open");
+    if (cb) cb({} as any);
   }
 }
