@@ -5,7 +5,7 @@ on:
   pull_request:
   push:
     branches:
-      - main
+      - testnet-deployment
       #- dev
 
 # Currently only deploying to production.
@@ -64,7 +64,7 @@ jobs:
 
   cd_master:
     # Deploy to production.
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/testnet-deployment' }}
     runs-on: ubuntu-latest
     needs: ci
     steps:
@@ -97,7 +97,7 @@ jobs:
   #       retry-delay: 5s
   
   healthcheck_master:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/testnet-deployment' }}
     runs-on: ubuntu-latest
     needs: cd_master
     steps:
