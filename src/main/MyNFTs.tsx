@@ -61,7 +61,6 @@ function mapNFTDataToImages(nfts: NFTMetaData[], history: any): JSX.Element[] {
   }
   return nfts.map((data, i) => {
     const img = `/assets/${data.assetId}.png`;
-    console.log(img);
     return (
       <Col key={i} className="NFTTile" xs={12} sm={6} md={4} lg={3} xl={2}>
         <NFT

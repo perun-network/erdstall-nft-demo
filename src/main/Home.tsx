@@ -37,7 +37,6 @@ function Home() {
     };
 
     getNFTs().then((v) => {
-      console.log("GETTING NFTS");
       setNFTs(
         mapNFTDataToImages(
           v,
@@ -71,7 +70,6 @@ function mapNFTDataToImages(
       data.secret && data.owner !== account
         ? "/noise.gif"
         : `/assets/${data.assetId}.png`;
-    console.log(img);
     return (
       <Col key={i} className="NFTTile" xs={12} sm={6} md={4} lg={3} xl={2}>
         <NFT
