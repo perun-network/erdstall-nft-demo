@@ -12,6 +12,8 @@ import AppContext from "./AppContext";
 import "./App.css";
 
 function App() {
+  console.log("Welcome to NERD.");
+
   const [onboarded, setOnboarded] = React.useState(false);
   const [hasInfo, setShowInfo] = React.useState(false);
 
