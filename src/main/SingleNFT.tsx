@@ -20,10 +20,12 @@ export default function SingleNFT() {
   const [nftState, setNFTState] = React.useState({} as NFTMetaData);
   const ctx = React.useContext(AppContext);
 
+  const config = require("../config.json");
+
   React.useEffect(() => {
     const getNFTData = async () => {
       const response = await fetch(
-        `${window.location.protocol}//${window.location.hostname}:8440/nft/${token}/${id}`,
+        `${window.location.protocol}//${config.NERDAddr}:${config.NERDPort}/nft/${token}/${id}`,
         {
           method: "GET",
           headers: {
