@@ -9,6 +9,8 @@ import NFT from "./NFT";
 import NFTMetaData from "../api/nftmetadata";
 import AppContext from "../AppContext";
 
+const config = require("../config.json");
+
 function Home() {
   const [ready, setReady] = React.useState(false);
   const [nfts, setNFTs] = React.useState(new Array<JSX.Element>());
@@ -18,7 +20,7 @@ function Home() {
   const fetchNFTs = () => {
     const getNFTs = async () => {
       const response = await fetch(
-        `${window.location.protocol}//${window.location.hostname}:8440/nfts`,
+        `${window.location.protocol}//${config.NERDAddr}:${config.NERDPort}/nfts`,
         {
           method: "GET",
           headers: {

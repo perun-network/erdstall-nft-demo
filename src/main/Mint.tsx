@@ -13,6 +13,8 @@ import AppContext from "../AppContext";
 import MintTX from "../api/minttx";
 import AccountResponse from "../api/accountresponse";
 
+const config = require("../config.json");
+
 export interface nftState {
   confidential: boolean;
   title: string;
@@ -86,7 +88,7 @@ function Mint(props: props) {
 
               const putMetaData = async () => {
                 const response = await fetch(
-                  `${window.location.protocol}//${window.location.hostname}:8440/nft/${minttx.token}/${minttx.id.value}`,
+                  `${window.location.protocol}//${config.NERDAddr}:${config.NERDPort}/nft/${minttx.token}/${minttx.id.value}`,
                   {
                     method: "PUT",
                     body: JSON.stringify({
