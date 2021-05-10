@@ -26,9 +26,11 @@ interface props {
   onMint: (s: nftState) => void;
 }
 
-const defaultImages: JSX.Element[] = [0, 1, 2].map((v) => {
-  return <option value={v}>{v}</option>;
-});
+const defaultImages: JSX.Element[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(
+  (v) => {
+    return <option value={v}>{v}</option>;
+  }
+);
 
 function Mint(props: props) {
   const [confidential, setConfidential] = useState(false);
