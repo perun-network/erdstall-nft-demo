@@ -22,6 +22,13 @@ function Onboarding(props: props) {
       <Row className="my-auto">
         <Button
           onClick={async () => {
+            if (!ctx.connected) {
+              errors.Erdstall(
+                <p>Operator unreachable, please try at a later time.</p>
+              );
+              return;
+            }
+
             const res = await onboard();
             if (res instanceof Error) {
               return;

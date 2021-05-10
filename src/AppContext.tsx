@@ -13,6 +13,7 @@ export interface NiftyErdstallState {
   contract?: Address;
   conn: Connection;
   provider?: ethers.providers.Web3Provider;
+  connected: boolean;
   nerdop: Url;
 }
 
@@ -28,6 +29,7 @@ const nerdop = new Url(config.NERDPort, config.NERDAddr, "http", "");
 const AccountContext = React.createContext({
   conn: new Connection(operatorURL),
   nerdop: nerdop,
+  connected: false,
 } as NiftyErdstallState);
 
 export default AccountContext;

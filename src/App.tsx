@@ -29,6 +29,12 @@ function App() {
   ctx.conn.on("receipt", console.log);
   ctx.conn.on("proof", console.log);
   ctx.conn.on("error", console.log);
+  ctx.conn.on("open", () => {
+    ctx.connected = true;
+  });
+  ctx.conn.on("close", () => {
+    ctx.connected = false;
+  });
 
   React.useEffect(() => {
     document.addEventListener("ErdstallError", handleError);

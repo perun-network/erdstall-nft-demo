@@ -3,5 +3,5 @@
   "OperatorAddr": "127.0.0.1",
   "OperatorPort": 8401,
   "NERDAddr": "localhost",
-  "NERDPort": "8440"
+  "NERDPort": 8440
 }
