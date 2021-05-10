@@ -44,6 +44,7 @@ function MyNFTs() {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchNFTs, []);
   return (
     <Container className="MyNFTs" fluid>
