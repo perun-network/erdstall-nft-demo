@@ -27,7 +27,11 @@ export default function NFT(props: props) {
         <Container className="NFTText">{props.description}</Container>
       </Container>
       <Card.Body>
-        <Card.Title className="NFTTitle">{props.title}</Card.Title>
+        <Card.Title className="NFTTitle">
+          {props.title.length < 100
+            ? props.title
+            : `${props.title.substr(0, 76)}...`}
+        </Card.Title>
         {props.buttons ? props.buttons : <></>}
       </Card.Body>
     </Card>
