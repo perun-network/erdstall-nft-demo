@@ -37,6 +37,7 @@ function Mint(props: props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(0);
+  const [valid, setValid] = useState(true);
   const ctx = useContext(AppContext);
   const history = useHistory();
 
@@ -49,6 +50,7 @@ function Mint(props: props) {
             setImage={setImage}
             setTitle={setTitle}
             setDescription={setDescription}
+            setValidInput={setValid}
           />
         }
         lb={<MintSettings onConfidential={setConfidential} />}
@@ -58,6 +60,7 @@ function Mint(props: props) {
             className="MintButton"
             size="lg"
             variant="light"
+            disabled={!valid}
             onClick={async () => {
               props.onMint({
                 confidential: confidential,
